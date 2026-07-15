@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart SkinMatch | Product Analysis</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#f6dfc5",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#b0cae1",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#4b463f",
+                    "surface-container-high": "#e5e8f1",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#78726a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#2d3138",
+                    "outline": "#73777d",
+                    "on-secondary-fixed": "#25190a",
+                    "on-tertiary-container": "#fff9f4",
+                    "on-surface": "#181c22",
+                    "surface": "#f8f9ff",
+                    "on-surface-variant": "#43474c",
+                    "primary-fixed": "#cbe6fe",
+                    "surface-variant": "#dfe2ec",
+                    "on-secondary-fixed-variant": "#534432",
+                    "tertiary": "#5f5a52",
+                    "on-tertiary-fixed": "#1f1b15",
+                    "secondary": "#6c5c48",
+                    "on-primary-fixed-variant": "#30495d",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#5d768b",
+                    "secondary-fixed-dim": "#d9c3aa",
+                    "on-background": "#181c22",
+                    "on-primary-fixed": "#011e2f",
+                    "secondary-fixed": "#f6dfc5",
+                    "surface-dim": "#d7dae3",
+                    "tertiary-fixed": "#eae1d7",
+                    "tertiary-fixed-dim": "#cdc5bc",
+                    "inverse-on-surface": "#eef0fa",
+                    "primary-fixed-dim": "#b0cae1",
+                    "on-secondary-container": "#72624d",
+                    "surface-tint": "#486175",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c3c7cd",
+                    "surface-container": "#ebeef7",
+                    "surface-container-low": "#f1f3fd",
+                    "on-primary-container": "#f8faff",
+                    "primary": "#455d71",
+                    "surface-container-highest": "#dfe2ec",
+                    "surface-bright": "#f8f9ff",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "container-max": "1280px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Manrope"],
+                    "label-md": ["Manrope"],
+                    "headline-lg-mobile": ["Playfair Display"],
+                    "display-lg": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "body-md": ["Manrope"],
+                    "label-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f8f9ff;
+            color: #181c22;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(248, 249, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(108, 92, 72, 0.15);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(69, 93, 113, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="font-body-md">
+<!-- Top Navigation Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl border-b border-secondary/20 shadow-sm">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-desktop py-unit">
+<div class="font-display-lg text-headline-md tracking-tight text-primary dark:text-primary-fixed">
+                Smart SkinMatch
+            </div>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="font-body-lg text-body-lg text-on-surface-variant dark:text-surface-variant hover:text-primary hover:scale-105 transition-transform duration-300" href="#">Science</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant dark:text-surface-variant hover:text-primary hover:scale-105 transition-transform duration-300" href="#">Rituals</a>
+<a class="font-body-lg text-body-lg text-primary dark:text-primary-fixed font-bold border-b-2 border-primary hover:scale-105 transition-transform duration-300" href="#">Products</a>
+</nav>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-md hover:scale-105 transition-transform duration-300 active:opacity-80">
+                Analyze My Skin
+            </button>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-20 space-y-32">
+<!-- Hero Analysis Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<!-- Left: Premium Product Imagery -->
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary/5 blur-3xl rounded-full"></div>
+<div class="relative overflow-hidden rounded-xl bg-surface-container shadow-xl">
+<img alt="Luxury Skincare Bottle" class="w-full aspect-[0.67] object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/AP1WRLtWvSyNaL9AziwMBq6h_9Qx3S5sA_CB3YGVu4Gbj1fuCOU1Y5wxGx66pQagNFQNJW9-2dQISM_CSvJ9QSqVVU-M8zo3KNAvjz8JTtHzSXIakCjJS7zHZi0Xi-wQMTGL0wRcPGQmdH5R4gnl1BEZG9PzxWtKhzM_KQ4OtgzOhhpRYYS1j9F6LWBjKatJTsBOgZQl9Vb0Jza6K77YLwFRa199yCNFgUIfDyBzRx6mPT57EDyYteCUEqt2SIQj"/>
+</div>
+<!-- Float Badge -->
+<div class="absolute bottom-8 -right-4 md:-right-8 glass-panel p-6 rounded-xl animate-float">
+<span class="font-label-sm text-primary uppercase tracking-widest block mb-2">Editor's Choice</span>
+<p class="font-headline-md text-primary">Hydra-Oceanic Serum</p>
+</div>
+</div>
+<!-- Right: Compatibility Meter & Info -->
+<div class="space-y-12">
+<div class="space-y-4">
+<span class="font-label-md text-secondary tracking-widest uppercase">Personalized Score</span>
+<h1 class="font-display-lg text-display-lg text-primary leading-tight">Match Precision Analysis</h1>
+<p class="text-on-surface-variant text-body-lg max-w-xl">
+                        Our AI has analyzed 42 dermatological variables from your profile to determine how this formula interacts with your unique lipid barrier.
+                    </p>
+</div>
+<div class="flex flex-col md:flex-row items-center gap-12">
+<!-- Circular Meter -->
+<div class="relative flex items-center justify-center w-64 h-64">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="text-secondary-fixed-dim stroke-current" cx="50" cy="50" fill="transparent" r="45" stroke-width="4"></circle>
+<circle class="text-primary stroke-current progress-ring__circle" cx="50" cy="50" fill="transparent" r="45" stroke-dasharray="282.7" stroke-dashoffset="17" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="font-display-lg text-5xl text-primary font-bold">94%</span>
+<span class="font-label-md text-secondary uppercase">Compatibility</span>
+</div>
+</div>
+<div class="flex-1 space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">check_circle</span>
+<div>
+<h4 class="font-label-md text-on-surface">Texture Harmony</h4>
+<p class="text-body-md text-on-surface-variant">Matches your preference for lightweight, aqueous finishes.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+<div>
+<h4 class="font-label-md text-on-surface">Safe Formulation</h4>
+<p class="text-body-md text-on-surface-variant">Zero comedogenic triggers for your specific pore profile.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-10 py-4 rounded-full font-label-md flex items-center gap-2 hover:scale-105 transition-all">
+<span class="material-symbols-outlined">shopping_bag</span>
+                        Add to Ritual
+                    </button>
+<button class="border border-primary text-primary px-10 py-4 rounded-full font-label-md hover:bg-primary/5 transition-all">
+                        Save Analysis
+                    </button>
+</div>
+</div>
+</section>
+<!-- Ingredient Transparency Bento Grid -->
+<section class="space-y-12">
+<div class="text-center max-w-2xl mx-auto space-y-4">
+<h2 class="font-headline-lg text-display-lg text-primary">Ingredient Transparency</h2>
+<p class="text-on-surface-variant text-body-lg">We decode the science so you don't have to. Every active is clinical-grade and ethically sourced.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Ingredient Card 1 -->
+<div class="glass-panel p-8 rounded-2xl flex flex-col space-y-6 hover:shadow-lg transition-shadow">
+<div class="flex justify-between items-start">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-label-sm uppercase">Active</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">science</span>
+</div>
+<div>
+<h3 class="font-headline-md text-primary mb-2">Sea Kelp Bioferment</h3>
+<p class="text-body-md text-on-surface-variant">Provides a high concentration of minerals and vitamins to soothe inflammation and hydrate deeply.</p>
+</div>
+<div class="pt-4 border-t border-secondary/10 mt-auto">
+<span class="font-label-md text-primary">Efficacy: 9.8/10</span>
+</div>
+</div>
+<!-- Ingredient Card 2 -->
+<div class="glass-panel p-8 rounded-2xl flex flex-col space-y-6 hover:shadow-lg transition-shadow">
+<div class="flex justify-between items-start">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-label-sm uppercase">Stabilizer</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div>
+<h3 class="font-headline-md text-primary mb-2">Triple Hyaluronic Acid</h3>
+<p class="text-body-md text-on-surface-variant">Multi-molecular weights penetrate different skin layers for comprehensive moisture retention.</p>
+</div>
+<div class="pt-4 border-t border-secondary/10 mt-auto">
+<span class="font-label-md text-primary">Efficacy: 9.5/10</span>
+</div>
+</div>
+<!-- Ingredient Card 3 -->
+<div class="glass-panel p-8 rounded-2xl flex flex-col space-y-6 hover:shadow-lg transition-shadow">
+<div class="flex justify-between items-start">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-label-sm uppercase">Nourishing</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<h3 class="font-headline-md text-primary mb-2">Squalane (Olive Derived)</h3>
+<p class="text-body-md text-on-surface-variant">Mimics skin's natural sebum to lock in moisture without clogging pores or leaving oily residue.</p>
+</div>
+<div class="pt-4 border-t border-secondary/10 mt-auto">
+<span class="font-label-md text-primary">Efficacy: 9.2/10</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Community Review Section -->
+<section class="space-y-12">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6">
+<div class="space-y-4">
+<h2 class="font-headline-lg text-display-lg text-primary">Reviews from your Skin Twins</h2>
+<p class="text-on-surface-variant text-body-lg">Users with a 90%+ profile similarity share their results.</p>
+</div>
+<button class="text-primary font-label-md flex items-center gap-2 group">
+                    View All 1,240 Reviews
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Review 1 -->
+<div class="glass-panel p-10 rounded-3xl flex gap-8 items-start relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">98% Twin Match</div>
+</div>
+<div class="w-20 h-20 rounded-full flex-shrink-0 overflow-hidden border-2 border-secondary-fixed">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young woman with radiant, healthy skin in soft, natural window lighting. The style is clean, modern, and clinical yet warm. High-end lifestyle photography, creamy bokeh background, ocean and ivory color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDl6z9SyeDGbjZxjTFI3mZKanbNH2ABli0BxF3L2ZprLdlqAM4OKGXS_xxJZkuZCnGdFMPs9fqV3lbnEFpudVOjPVbJChquuAv96ssT9JrfQ5RSvKMokdqAq8rXYIuApX2qYH64RbEdbc9wKtFp9kLbOKM4FOWbaX--m2xhZwVkdDdJ3IcX1gqaUQdA1vIJO0-2kI-r87ZoxJdFV6UldvVd0fTsrQ9My6zBLgsDKRYZeaFfUjS0utNS-Cx5nyjN_Bs7N6G2teWtMsJB"/>
+</div>
+<div class="space-y-4">
+<div class="flex text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<h4 class="font-headline-md text-primary">"The first serum that didn't pill"</h4>
+<p class="text-body-md text-on-surface-variant leading-relaxed italic">
+                            "Finding products for my sensitive, combination skin used to be a nightmare. Smart SkinMatch recommended this and it's been a game changer. The 'Glass Skin' effect is real."
+                        </p>
+<div class="flex items-center gap-4 text-secondary font-label-sm">
+<span>Elena M.</span>
+<span>•</span>
+<span>Age 28, Combination Skin</span>
+</div>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="glass-panel p-10 rounded-3xl flex gap-8 items-start relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">92% Twin Match</div>
+</div>
+<div class="w-20 h-20 rounded-full flex-shrink-0 overflow-hidden border-2 border-secondary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional male portrait in a minimalist setting. He has clear skin and a relaxed expression. Soft side lighting highlights facial texture without shadows. The aesthetic is upscale, clean, and reflects the 'Data-Driven Serenity' theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmnRk9tDAUjVNVQQWyCT3_7VN-qowYnZDk3MoBkgf-aR8UuMCRiLzxxK28m_EjmJ6tEu4N57PEniUGFNTKQbRfb4HulpYsaFfgD3IGvtNgm8DnOztLASRai_R2fjCNbCbwyIO9AO_I_Yct2BSLB8z1ZxSy17RVh-hT6QZgO-q1SKSVFNBHl4A-ifJQ3Gc9trX47hqrMkCzeiyEkellbSVP4UpkNR37AZIoiDIckt8KxDHRJcoiZwZrmpQjCyVU9RKVRF9ko0SygUTO"/>
+</div>
+<div class="space-y-4">
+<div class="flex text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<h4 class="font-headline-md text-primary">"Zero fragrance, 100% results"</h4>
+<p class="text-body-md text-on-surface-variant leading-relaxed italic">
+                            "I appreciate the ingredient transparency. No unnecessary fillers, just high-potency actives. My redness decreased significantly after just two weeks of nightly ritual."
+                        </p>
+<div class="flex items-center gap-4 text-secondary font-label-sm">
+<span>David K.</span>
+<span>•</span>
+<span>Age 35, Sensitive Skin</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 bg-surface-container-low dark:bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter max-w-container-max mx-auto px-margin-desktop">
+<div class="space-y-6">
+<div class="font-display-lg text-headline-md text-primary">Smart SkinMatch</div>
+<p class="text-secondary dark:text-secondary-fixed-dim font-body-md max-w-xs">
+                    Bridging clinical precision with the visceral calm of the ocean. Your skin's future, data-driven and serene.
+                </p>
+<div class="text-on-surface-variant dark:text-surface-variant text-body-md">
+                    © 2024 Smart SkinMatch. Data-Driven Serenity.
+                </div>
+</div>
+<div class="flex flex-wrap gap-x-12 gap-y-6 md:justify-end">
+<div class="space-y-4">
+<h5 class="font-label-md text-primary uppercase">Resources</h5>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Clinical Studies</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Privacy</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="font-label-md text-primary uppercase">Company</h5>
+<ul class="space-y-2">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Ethics</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Terms</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the progress ring
+        window.addEventListener('DOMContentLoaded', () => {
+            const circle = document.querySelector('.progress-ring__circle');
+            if (circle) {
+                const radius = circle.r.baseVal.value;
+                const circumference = radius * 2 * Math.PI;
+                circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                
+                // Set to 94% match as requested
+                const offset = circumference - (94 / 100 * circumference);
+                setTimeout(() => {
+                    circle.style.strokeDashoffset = offset;
+                }, 500);
+            }
+        });
+
+        // Simple scroll reveal effect
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-8');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

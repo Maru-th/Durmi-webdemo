@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dermi Skin Match helps you choose skincare that fits your skin and allergy history." />
+  <title>Dermi Skin Match — Skincare that understands your skin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="Dermi Skin Match home"><span class="brand-mark">d</span><span>DERMI<span class="brand-sub">skin match</span></span></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">☰</button>
+    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+      <a class="active" href="#how-it-works">How it works</a><a href="#checker">Check a product</a><a href="#profile">Skin profile</a><a href="./about.html">About Dermi</a><a class="button button-dark" href="./skin-profile.html">Get started</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero section-shell"><div class="hero-copy"><p class="eyebrow"><span class="eyebrow-dot"></span> SKINCARE, BUT PERSONAL</p><h1>Let your skin<br /><em>choose what fits</em></h1><p class="hero-lede">Understand your skin more deeply, then find skincare that truly fits you — based on ingredients and your allergy history.</p><div class="hero-actions"><a class="button button-dark" href="./skin-profile.html">Build my skin profile <span>→</span></a><a class="text-link" href="#how-it-works">See how it works <span>↓</span></a></div><div class="trust-row"><span>✦ Your data stays private</span><span>✦ Recommendations with reasons</span></div></div><div class="hero-visual" aria-label="Illustration of a skin profile"><div class="sun-disc"></div><div class="face-blob"><div class="face-line face-line-1"></div><div class="face-line face-line-2"></div><div class="face-eye left"></div><div class="face-eye right"></div><div class="face-smile"></div></div><div class="floating-card card-profile"><span class="card-icon">✦</span><div><strong>Combination skin</strong><small>Your skin profile</small></div></div><div class="floating-card card-score"><strong>92%</strong><small>Skin match</small></div><span class="visual-note">your skin,<br />your story</span></div></section>
+    <section id="how-it-works" class="section-shell flow-section"><div class="section-heading"><div><p class="eyebrow">THE DERMI METHOD</p><h2>Understand first,<br /><em>choose with confidence</em></h2></div><p>A simple path that makes skincare choices more informed and less of a guess.</p></div><div class="flow-grid"><article class="flow-card active-card"><div class="step-number">01</div><div class="flow-icon scan-icon">◌</div><h3>Scan your skin</h3><p>Take a fresh-face photo in seconds to see your skin’s early signals.</p><span class="flow-arrow">↗</span></article><article class="flow-card"><div class="step-number">02</div><div class="flow-icon">☷</div><h3>Tell your skin story</h3><p>Share your environment, skin concerns, and ingredient allergies.</p><span class="flow-arrow">↗</span></article><article class="flow-card"><div class="step-number">03</div><div class="flow-icon">✦</div><h3>Find what fits</h3><p>Check product ingredients with a match score and clear reasons.</p><span class="flow-arrow">↗</span></article></div></section>
+    <section id="checker" class="checker-section"><div class="section-shell checker-inner"><div class="checker-copy"><p class="eyebrow light">SMART INGREDIENT CHECKER</p><h2>Does this skincare<br /><em>fit your skin?</em></h2><p>Search for a product and let Dermi compare its ingredients with your skin profile.</p><div class="search-box"><span>⌕</span><input id="product-search" type="search" placeholder="Search a product or brand" aria-label="Search for a product" /><button id="search-button" type="button">Check it</button></div><p id="search-message" class="search-message" role="status"></p></div><div class="result-card" aria-label="Example product check result"><div class="result-top"><div><span class="result-label">EXAMPLE RESULT</span><h3>Hydra Calm Moisturizer</h3><small>Dear, Skin</small></div><span class="save-button" aria-label="Save product">♡</span></div><div class="score-row"><div class="score-ring"><strong>92</strong><span>%</span></div><div><strong class="score-title">A great fit for your skin</strong><p>Supports combination skin and helps restore moisture.</p></div></div><div class="ingredient-list"><span class="tag good">✓ Panthenol</span><span class="tag good">✓ Ceramide</span><span class="tag warn">! Fragrance-free</span></div><a href="#profile" class="result-link">See the full reasoning <span>→</span></a></div></div></section>
+    <section id="profile" class="profile-section section-shell"><div class="profile-panel"><div><p class="eyebrow">YOUR SKIN PROFILE</p><h2>A skin profile<br /><em>that is truly yours</em></h2><p>Keep your skin details and avoid-list in one place, so every recommendation becomes more personal over time.</p><a class="button button-outline" href="./skin-profile.html">Create my profile <span>→</span></a></div><div class="profile-chips"><span class="chip-title">Sample profile</span><div><span class="profile-chip">Combination skin</span><span class="profile-chip">Blemish-prone</span><span class="profile-chip">Fragrance allergy</span><span class="profile-chip">Air-conditioned office</span></div></div></div></section>
+  </main>
+  <footer class="site-footer section-shell"><span>© 2025 Dermi Skin Match</span><span>For decision support only — not a medical diagnosis.</span><a href="./about.html">About us ↗</a></footer>
+  <script src="./js/main.js"></script>
+</body>
+</html>
