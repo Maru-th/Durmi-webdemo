@@ -1,0 +1,15 @@
+.site-header .nav-toggle { display: none; }
+.site-header .main-nav { display: flex; gap: 24px; align-items: center; }
+.site-header .main-nav a { color: var(--muted); }
+.site-header .main-nav a.active { color: var(--penn); font-weight: 700; }
+.site-header .main-nav .nav-cta { color: var(--white); margin-left: 4px; }
+.site-header .nav-toggle:focus-visible,
+.site-header .main-nav a:focus-visible { outline: 3px solid var(--vista); outline-offset: 3px; }
+
+@media (max-width: 800px) {
+  .site-header .nav-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 0; background: transparent; color: var(--penn); font-size: 25px; cursor: pointer; }
+  .site-header .main-nav { display: none; position: absolute; z-index: 20; top: 80px; left: 0; right: 0; padding: 20px 24px 24px; background: var(--isabelline); border-bottom: 1px solid #e4dcd5; flex-direction: column; align-items: stretch; gap: 8px; box-shadow: 0 14px 30px #08205b14; }
+  .site-header .main-nav.is-open { display: flex; }
+  .site-header .main-nav a { min-height: 44px; display: flex; align-items: center; padding: 8px 0; }
+  .site-header .main-nav .nav-cta { justify-content: center; padding: 12px 18px; margin: 8px 0 0; }
+}

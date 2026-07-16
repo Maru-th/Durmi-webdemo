@@ -288,10 +288,12 @@ continueButton.addEventListener('click', () => {
 
 backButton.addEventListener('click', () => { if (currentStep > 1) showStep(currentStep - 1); });
 document.querySelector('#save-exit').addEventListener('click', () => {
-  localStorage.setItem('dermiProfileDraft', JSON.stringify(profileState));
-  window.location.href = './index.html#profile';
+  profileState.updatedAt = new Date().toISOString();
+  profileState.scan.previewAvailable = false;
+  localStorage.setItem('dermiProfile', JSON.stringify(profileState));
+  window.location.href = './profile.html';
 });
-document.querySelector('#save-profile').addEventListener('click', () => {
+document.querySelector('#save-profile')?.addEventListener('click', () => {
   localStorage.setItem('dermiProfile', JSON.stringify(profileState));
   document.querySelector('#save-message').textContent = 'Your profile has been saved on this device.';
 });
