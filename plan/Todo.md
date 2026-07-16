@@ -3,10 +3,9 @@
 ## P0 - Demo blockers: make the main journey work
 
 
-- [ ] **Make the face scan optional.** Provide a clear "Skip scan and answer manually" path so camera permissions or an awkward live demo cannot block the flow.
 - [ ] **Fix and rehearse the face-scan state.** Camera/upload, preview, retake, loading, and the handoff to questions must behave consistently; do not present it as medical analysis.
 
-    
+
 ## P1 - Demo polish: make the value proposition obvious
 
 These tasks make the demo feel deliberate and show why Dermi is useful.
