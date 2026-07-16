@@ -1,0 +1,61 @@
+.scan-guide {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  color: #cbd8ee;
+  pointer-events: none;
+  background: linear-gradient(180deg, #08205b11, #08205b44);
+}
+
+.scan-guide > p {
+  margin: 0;
+  font-size: 12px;
+  text-shadow: 0 1px 3px #08205b;
+}
+
+.scan-guide .scan-frame {
+  height: 255px;
+  width: 190px;
+  border: 1px solid #d0e4ffcc;
+  border-radius: 50%;
+  position: relative;
+}
+
+.scan-loading,
+.scan-complete { z-index: 3; }
+
+.scan-complete {
+  position: absolute;
+  inset: 0;
+  background: #08205be8;
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.scan-complete span {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--vista);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+
+.scan-complete small {
+  color: var(--columbia);
+  font-size: 11px;
+}
+
+.scan-stage[data-scan-state="camera"] video { transform: scaleX(-1); }
+.scan-actions .button:disabled { cursor: wait; opacity: .72; transform: none; }
+.upload-button.is-disabled { pointer-events: none; opacity: .55; cursor: wait; }
+.profile-actions #continue-step:disabled { cursor: not-allowed; transform: none; }
