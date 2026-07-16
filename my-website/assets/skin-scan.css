@@ -13,7 +13,8 @@
 
 #scan-guide[hidden],
 #scan-loading[hidden],
-#scan-complete[hidden] {
+#scan-complete[hidden],
+#signup-mockup[hidden] {
   display: none !important;
 }
 
@@ -64,4 +65,57 @@
 .scan-stage[data-scan-state="camera"] video { transform: scaleX(-1); }
 .scan-actions .button:disabled { cursor: wait; opacity: .72; transform: none; }
 .upload-button.is-disabled { pointer-events: none; opacity: .55; cursor: wait; }
+.skip-face-scan { align-self: center; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .profile-actions #continue-step:disabled { cursor: not-allowed; transform: none; }
+
+.signup-mockup {
+  align-items: center;
+  background: #08205b80;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+}
+
+.signup-mockup-card {
+  background: var(--isabelline);
+  border: 1px solid #d0e4ff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px #08205b44;
+  max-width: 360px;
+  padding: 28px;
+  position: relative;
+  width: 100%;
+}
+
+.signup-mockup-card h2 { color: var(--penn); font-size: 25px; margin: 4px 0 8px; }
+.signup-mockup-card > p:not(.step-kicker):not(.inline-message) { line-height: 1.55; margin: 0 0 18px; }
+.signup-email-label { color: var(--penn); display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.signup-mockup-card input { border: 1px solid #7096d1; border-radius: 10px; box-sizing: border-box; margin-bottom: 12px; padding: 12px; width: 100%; }
+.signup-mockup-card .button { width: 100%; }
+.signup-mockup-card .inline-message { font-size: 12px; margin: 12px 0 0; text-align: center; }
+.google-signup-button { align-items: center; background: var(--white); border: 1px solid #cfd6e4; border-radius: 10px; color: var(--ink); cursor: pointer; display: flex; font: 600 13px inherit; gap: 12px; justify-content: center; padding: 12px; width: 100%; }
+.google-signup-button span { color: #4285f4; font: 700 19px/1 Arial, sans-serif; }
+.signup-divider { align-items: center; color: var(--muted); display: flex; font-size: 11px; gap: 10px; margin: 18px 0; }
+.signup-divider span { background: #d9d2ca; flex: 1; height: 1px; }
+.signup-divider b { font-weight: 500; }
+.guest-continue { background: transparent; border: 0; color: var(--muted); cursor: pointer; display: block; font: 500 11px inherit; margin: 15px auto 0; padding: 7px; text-decoration: underline; text-underline-offset: 3px; }
+.google-signup-button:focus-visible, .signup-mockup-card input:focus-visible, .guest-continue:focus-visible { outline: 3px solid var(--vista); outline-offset: 3px; }
+
+.question-sequence { max-width: 670px; }
+.question-count { color: var(--muted); font: 600 12px/'DM Sans', sans-serif; margin-bottom: 26px; }
+.question-count > div { background: #e7dfd7; border-radius: 99px; height: 6px; margin-top: 9px; overflow: hidden; }
+.question-count i { background: var(--vista); border-radius: inherit; display: block; height: 100%; transition: width .2s ease; }
+.question-sequence .option-grid { gap: 10px; }
+.question-sequence .option-grid button { min-height: 48px; padding-left: 16px; padding-right: 16px; }
+.one-question-input { background: var(--isabelline); border: 1px solid #ded5cc; border-radius: 11px; box-sizing: border-box; color: var(--ink); font: 14px inherit; min-height: 50px; padding: 13px; resize: vertical; width: 100%; }
+.question-sequence .product-fields { max-width: 540px; }
+.question-skip { color: var(--muted); margin-top: 20px; text-decoration: underline; text-underline-offset: 3px; }
+.question-error { margin: 16px 0 0; }
+
+@media (max-width: 480px) {
+  .signup-mockup { padding: 16px; }
+  .signup-mockup-card { padding: 24px 20px; }
+}

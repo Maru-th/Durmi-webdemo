@@ -128,9 +128,6 @@ Compare the product with the current `dermiProfile` object and show:
 - Test mobile camera, forms, keyboard navigation, touch targets, contrast, and English copy.
 
 ## Assumptions
-
-- No account, login, or sign-up is required for the MVP.
-- Profile data is stored locally on the device until a backend is added.
 - MVP product lookup uses product name or brand; barcode scanning comes later.
 - The product database is the static JSON file at `my-website/assets/Products.json` with 375 records.
 - Product display uses a route such as `product.html?product=<encoded product identifier>`.

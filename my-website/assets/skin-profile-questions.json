@@ -1,0 +1,11 @@
+{
+  "questions": [
+    { "id": "skin-type", "section": "questions", "key": "skinType", "label": "Which skin type sounds most like you?", "helpText": "Choose the answer that feels most accurate today.", "type": "single", "required": true, "options": ["Oily", "Dry", "Combination", "Normal", "Not sure yet"] },
+    { "id": "concerns", "section": "questions", "key": "concerns", "label": "What are your main skin concerns?", "helpText": "Select every concern you would like to improve.", "type": "multiple", "required": true, "options": ["Breakouts and congestion", "Dryness and dehydration", "Dark spots", "Fine lines", "Sensitivity and redness"] },
+    { "id": "environment", "section": "questions", "key": "livingHabits", "label": "Where does your skin spend most of its day?", "helpText": "Select every environment that regularly affects your skin.", "type": "multiple", "required": true, "options": ["Mostly air-conditioned", "Outdoor and sun exposed", "Hot and humid", "Cold or dry climate", "Mixed environment"] },
+    { "id": "makeup", "section": "questions", "key": "makeup", "label": "How often do you wear makeup?", "helpText": "This helps Dermi understand your usual routine.", "type": "select", "required": false, "options": ["Never", "Occasionally", "Most days", "Every day"] },
+    { "id": "budget", "section": "questions", "key": "budget", "label": "What is your skincare budget?", "helpText": "This helps us keep future product suggestions useful.", "type": "single", "required": true, "options": ["Budget-friendly", "Mid-range", "Premium", "No preference"] },
+    { "id": "ingredient-allergies", "section": "allergies", "key": "generalAllergies", "label": "Which ingredients does your skin avoid?", "helpText": "Select any known allergies or ingredients you prefer to avoid.", "type": "ingredient-allergies", "required": false, "options": ["Fragrance", "Alcohol", "Parabens", "Silicones", "Essential oils", "Chemical sunscreen", "I’m not sure"] },
+    { "id": "past-product-reactions", "section": "allergies", "key": "pastProductAllergies", "label": "Have products caused a reaction before?", "helpText": "Add products you reacted to so Dermi can flag similar formulas.", "type": "past-product-reactions", "required": false }
+  ]
+}

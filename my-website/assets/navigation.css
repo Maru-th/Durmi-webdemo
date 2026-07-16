@@ -13,3 +13,9 @@
   .site-header .main-nav a { min-height: 44px; display: flex; align-items: center; padding: 8px 0; }
   .site-header .main-nav .nav-cta { justify-content: center; padding: 12px 18px; margin: 8px 0 0; }
 }
+
+.custom-profile-edit { border-top: 1px solid var(--dashboard-line, #e5ddd5); display: grid; gap: 14px; margin-top: 28px; padding-top: 28px; }
+.custom-profile-edit h3 { color: var(--penn); font-size: 21px; margin: -8px 0 0; }
+.custom-profile-field { border: 0; margin: 0; padding: 0; }
+.custom-profile-field > span, .custom-profile-field legend { color: var(--penn); display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.custom-profile-field select, .custom-profile-field textarea { background: var(--isabelline); border: 1px solid #e5ddd5; border-radius: 9px; box-sizing: border-box; color: var(--ink); font: 13px inherit; padding: 11px; width: 100%; }

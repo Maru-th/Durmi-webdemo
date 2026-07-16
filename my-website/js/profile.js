@@ -20,3 +20,44 @@ function bindOverviewActions() { document.querySelectorAll('[data-open-edit]').f
 function bindEditActions() { document.querySelector('#cancel-edit').addEventListener('click', () => { profile = editSnapshot; editMode = false; render(); }); document.querySelector('#save-edit').addEventListener('click', () => { profile.updatedAt = new Date().toISOString(); localStorage.setItem('dermiProfile', JSON.stringify(profile)); hasStored = true; editMode = false; editSnapshot = null; render(); document.querySelector('#profile-notice').textContent = 'Profile updated'; }); document.querySelectorAll('[data-edit-key]').forEach((button) => button.addEventListener('click', () => { const key = button.dataset.editKey; const value = button.dataset.editValue; const multi = button.dataset.editMulti === 'true'; if (key === 'budget') profile.budget = value; else if (multi) profile[key] = profile[key].includes(value) ? profile[key].filter((item) => item !== value) : [...profile[key], value]; else profile[key] = value; render(); enterEdit(); })); document.querySelector('[data-edit-field="makeup"]').addEventListener('change', (event) => { profile.makeup = event.target.value; }); document.querySelector('[data-edit-field="routineNotes"]').addEventListener('input', (event) => { profile.routineNotes = event.target.value; }); document.querySelector('#add-edit-allergy').addEventListener('click', () => { allergyDraft = document.querySelector('#edit-allergy-input').value.trim(); if (!allergyDraft) return; profile.generalAllergies = [...new Set([...profile.generalAllergies, allergyDraft])]; allergyDraft = ''; render(); enterEdit('allergy'); }); document.querySelectorAll('[data-remove-allergy]').forEach((button) => button.addEventListener('click', () => { profile.generalAllergies.splice(Number(button.dataset.removeAllergy), 1); render(); enterEdit('allergy'); })); document.querySelectorAll('[data-reaction]').forEach((button) => button.addEventListener('click', () => { const value = button.dataset.reaction; productDraft.reactions = productDraft.reactions.includes(value) ? productDraft.reactions.filter((item) => item !== value) : [...productDraft.reactions, value]; render(); enterEdit('product'); })); document.querySelector('#add-edit-product').addEventListener('click', () => { const name = document.querySelector('#edit-product-name').value.trim(); if (!name) return document.querySelector('#edit-product-name').focus(); profile.pastProductAllergies.push({ productName: name, brand: document.querySelector('#edit-product-brand').value.trim(), reactions: [...productDraft.reactions], notes: document.querySelector('#edit-product-notes').value.trim() }); productDraft = { productName: '', brand: '', reactions: [], notes: '' }; render(); enterEdit('product'); }); document.querySelectorAll('[data-remove-product]').forEach((button) => button.addEventListener('click', () => { profile.pastProductAllergies.splice(Number(button.dataset.removeProduct), 1); render(); enterEdit('product'); })); }
 document.querySelector('#edit-profile').addEventListener('click', () => { if (editMode) { profile = editSnapshot; editMode = false; render(); } else enterEdit(); });
 render();
+
+let configurableQuestions = [];
+const baseProfileRender = render;
+render = function renderWithCustomAnswers() {
+  profile.customAnswers = profile.customAnswers || {};
+  baseProfileRender();
+  renderCustomAnswers();
+};
+
+function customQuestionMarkup(question, editable = false) {
+  const value = profile.customAnswers?.[question.key] || (question.type === 'multiple' ? [] : '');
+  if (!editable) return answerRow(question.label, Array.isArray(value) ? value.join(', ') : value);
+  if (question.type === 'text') return `<label class="custom-profile-field"><span>${esc(question.label)}</span><textarea data-custom-answer="${esc(question.key)}" rows="3">${esc(value)}</textarea></label>`;
+  if (question.type === 'select') return `<label class="custom-profile-field"><span>${esc(question.label)}</span><select data-custom-answer="${esc(question.key)}"><option value="">Not provided</option>${(question.options || []).map((option) => `<option value="${esc(option)}" ${value === option ? 'selected' : ''}>${esc(option)}</option>`).join('')}</select></label>`;
+  const selected = Array.isArray(value) ? value : [];
+  return `<fieldset class="custom-profile-field"><legend>${esc(question.label)}</legend><div class="edit-choice-grid">${(question.options || []).map((option) => `<button type="button" class="edit-choice ${(question.type === 'multiple' ? selected.includes(option) : value === option) ? 'selected' : ''}" data-custom-choice="${esc(question.key)}" data-custom-value="${esc(option)}" data-custom-multiple="${question.type === 'multiple'}">${esc(option)}</button>`).join('')}</div></fieldset>`;
+}
+
+function renderCustomAnswers() {
+  const custom = configurableQuestions.filter((question) => !['skinType', 'concerns', 'livingHabits', 'makeup', 'budget', 'generalAllergies', 'pastProductAllergies'].includes(question.key));
+  if (!custom.length) return;
+  const answered = custom.filter((question) => { const value = profile.customAnswers?.[question.key]; return question.required || (Array.isArray(value) ? value.length : Boolean(value)); });
+  const overview = document.querySelector('#profile-overview');
+  overview.insertAdjacentHTML('beforeend', `<div class="dashboard-grid custom-answer-dashboard"><article class="dashboard-card"><div class="card-heading"><div><span class="card-kicker">MORE ABOUT YOUR SKIN</span><h3>Additional answers</h3></div><button class="section-edit" data-open-edit type="button">Edit</button></div>${answered.length ? answered.map((question) => customQuestionMarkup(question)).join('') : '<p class="not-provided">No additional answers provided yet.</p>'}</article></div>`);
+  if (editMode) {
+    document.querySelector('#profile-edit-panel').insertAdjacentHTML('beforeend', `<section class="custom-profile-edit"><span class="card-kicker">MORE ABOUT YOUR SKIN</span><h3>Additional answers</h3>${custom.map((question) => customQuestionMarkup(question, true)).join('')}</section>`);
+    bindCustomAnswerInputs();
+  }
+}
+
+function bindCustomAnswerInputs() {
+  document.querySelectorAll('[data-custom-answer]').forEach((input) => input.addEventListener(input.tagName === 'TEXTAREA' ? 'input' : 'change', (event) => { profile.customAnswers[event.target.dataset.customAnswer] = event.target.value; }));
+  document.querySelectorAll('[data-custom-choice]').forEach((button) => button.addEventListener('click', () => {
+    const key = button.dataset.customChoice; const value = button.dataset.customValue; const multi = button.dataset.customMultiple === 'true';
+    const current = profile.customAnswers[key] || (multi ? [] : '');
+    profile.customAnswers[key] = multi ? (current.includes(value) ? current.filter((item) => item !== value) : [...current, value]) : value;
+    render(); enterEdit();
+  }));
+}
+
+fetch('./assets/skin-profile-questions.json').then((response) => response.ok ? response.json() : Promise.reject()).then((data) => { configurableQuestions = Array.isArray(data.questions) ? data.questions.filter((question) => ['single', 'multiple', 'select', 'text'].includes(question.type)) : []; render(); }).catch(() => {});
