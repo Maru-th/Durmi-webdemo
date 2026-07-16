@@ -6,5 +6,5 @@ document.querySelectorAll('.main-nav a').forEach((link) => link.addEventListener
 const searchButton = document.querySelector('#search-button');
 const searchInput = document.querySelector('#product-search');
 const searchMessage = document.querySelector('#search-message');
-if (searchButton && searchInput && searchMessage) searchButton.addEventListener('click', () => { const value = searchInput.value.trim(); searchMessage.textContent = value ? `Checking “${value}” against our ingredient database…` : 'Enter a product or brand to get started.'; searchMessage.classList.toggle('success', Boolean(value)); });
+if (searchButton && searchInput && searchMessage) searchButton.addEventListener('click', () => { const value = searchInput.value.trim(); if (value) { window.location.href = `./product-search.html?q=${encodeURIComponent(value)}`; return; } searchMessage.textContent = 'Enter a product or brand to get started.'; searchMessage.classList.remove('success'); });
 if (searchInput && searchButton) searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); searchButton.click(); } });

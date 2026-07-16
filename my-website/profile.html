@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Review and edit your Dermi skin profile." />
+  <title>Your skin profile — Dermi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body class="profile-dashboard-page">
+  <header class="site-header"><a class="brand" href="./index.html" aria-label="Dermi home"><span class="brand-mark">d</span><span>DERMI<span class="brand-sub">skin match</span></span></a><button class="nav-toggle" aria-expanded="false" aria-controls="profile-dashboard-nav" aria-label="Open menu">☰</button><nav id="profile-dashboard-nav" class="main-nav" aria-label="Profile navigation"><a href="./index.html">Home</a><a href="./product-search.html">Check a product</a><a class="active" href="./profile.html">Skin profile</a><a href="./about.html">About Dermi</a></nav></header>
+  <main class="profile-dashboard section-shell">
+    <div class="dashboard-heading"><div><p class="eyebrow">YOUR PERSONAL SKIN PROFILE</p><h1>Your skin profile</h1><p>Everything Dermi uses to make your product recommendations more personal.</p></div><div class="dashboard-heading-actions"><span id="profile-mode-badge" class="profile-mode-badge">Demo profile</span><button id="edit-profile" class="button button-dark" type="button">Edit profile <span>✎</span></button></div></div>
+    <div id="profile-notice" class="profile-notice" role="status"></div>
+    <section id="profile-overview" class="dashboard-overview"></section>
+    <section id="profile-edit-panel" class="profile-edit-panel" hidden></section>
+    <section id="profile-readiness" class="profile-readiness"></section>
+  </main>
+  <script src="./js/main.js"></script><script src="./js/profile.js"></script>
+</body>
+</html>
