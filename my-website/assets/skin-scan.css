@@ -18,6 +18,8 @@
   display: none !important;
 }
 
+#scan-loading { display: none; }
+
 .scan-guide > p {
   margin: 0;
   font-size: 12px;

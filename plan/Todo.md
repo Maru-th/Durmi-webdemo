@@ -1,23 +1,12 @@
 # Dermi demo priorities
 
-## P0 - Demo blockers: make the main journey work
+## P0
 
 
-- [ ] **Fix and rehearse the face-scan state.** Camera/upload, preview, retake, loading, and the handoff to questions must behave consistently; do not present it as medical analysis.
-
-
-## P1 - Demo polish: make the value proposition obvious
+## P1
 
 These tasks make the demo feel deliberate and show why Dermi is useful.
 
-- [ ] **Polish the demo states.** Ensure empty, no-profile, incomplete-data, allergy-warning, and product-not-found states are clear and visually consistent.
-
-- [ ] **Trendyness** filters
-- [ ] **Bottom menu bar for mobile**
-- [ ] **User friendlyness** ask how familair are you with 
-- [ ] **Add auto recommend**
-- [ ] **reccomend product for starter**
-- [ ] **Whole set recommendation with budget**
 - [ ] **Make Website homepage have some kind of story**
 
 ## P2 - Trust and readiness: address reviewer concerns

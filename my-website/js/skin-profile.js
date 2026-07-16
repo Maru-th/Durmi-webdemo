@@ -20,6 +20,11 @@ const scanGuide = document.querySelector('#scan-guide');
 const scanLoading = document.querySelector('#scan-loading');
 const scanComplete = document.querySelector('#scan-complete');
 
+scanLoading.hidden = true;
+scanLoading.style.display = 'none';
+scanComplete.hidden = true;
+scanComplete.style.display = 'none';
+
 const skipScanButton = document.createElement('button');
 skipScanButton.id = 'skip-face-scan';
 skipScanButton.className = 'text-button skip-face-scan';
@@ -72,7 +77,9 @@ function showPanel(step) { currentStep = step; panels.forEach((panel) => { const
 function updateScanUi(state) {
   scanState = state; scanStage.dataset.scanState = state;
   const busy = state === 'analyzing' || state === 'complete';
-  scanGuide.hidden = state !== 'camera'; scanLoading.hidden = state !== 'analyzing'; scanComplete.hidden = state !== 'complete';
+  scanGuide.hidden = state !== 'camera';
+  scanLoading.hidden = state !== 'analyzing'; scanLoading.style.display = state === 'analyzing' ? 'grid' : 'none';
+  scanComplete.hidden = state !== 'complete'; scanComplete.style.display = state === 'complete' ? 'grid' : 'none';
   cameraButton.disabled = busy; photoUpload.disabled = busy; uploadButton.classList.toggle('is-disabled', busy); uploadButton.setAttribute('aria-disabled', String(busy));
   cameraButton.textContent = ({ idle: 'Open camera', camera: 'Capture photo', photoReady: 'Analyze this photo', analyzing: 'Analyzing…', complete: 'Scan complete' })[state];
   continueButton.disabled = currentStep === 1 && (!profileState.scan.imageAnalyzed || busy);
@@ -122,7 +129,7 @@ function selectedReactions() { return [...document.querySelectorAll('[data-react
 function bindQuestionInput(event) {
   const question = questions[questionIndex]; if (!question) return;
   const option = event.target.closest('[data-option]');
-  if (option) { const value = option.dataset.option; if (question.type === 'multiple') { const selected = getAnswer(question) || []; setAnswer(question, selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value]); } else if (question.type === 'ingredient-allergies') { profileState.generalAllergies = profileState.generalAllergies.includes(value) ? profileState.generalAllergies.filter((item) => item !== value) : [...profileState.generalAllergies, value]; } else setAnswer(question, value); renderQuestion(); return; }
+  if (option) { const value = option.dataset.option; if (question.type === 'multiple') { const selected = getAnswer(question) || []; const next = selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value]; setAnswer(question, next); option.classList.toggle('selected', next.includes(value)); return; } else if (question.type === 'ingredient-allergies') { profileState.generalAllergies = profileState.generalAllergies.includes(value) ? profileState.generalAllergies.filter((item) => item !== value) : [...profileState.generalAllergies, value]; } else setAnswer(question, value); renderQuestion(); return; }
   if (event.target.matches('[data-reaction]')) { event.target.classList.toggle('selected'); return; }
   if (event.target.id === 'add-allergy') { const input = document.querySelector('#custom-allergy'); const value = input.value.trim(); if (value && !profileState.generalAllergies.includes(value)) profileState.generalAllergies.push(value); renderQuestion(); return; }
   if (event.target.matches('[data-remove-allergy]')) { const custom = profileState.generalAllergies.filter((value) => !(question.options || []).includes(value)); profileState.generalAllergies = profileState.generalAllergies.filter((value) => value !== custom[Number(event.target.dataset.removeAllergy)]); renderQuestion(); return; }
@@ -131,7 +138,8 @@ function bindQuestionInput(event) {
   if (event.target.matches('.question-skip')) { questionIndex += 1; renderQuestion(); }
 }
 function validateQuestion() { const question = questions[questionIndex]; const error = document.querySelector('.question-error'); if (!question || !question.required || isAnswered(question)) return true; if (error) error.textContent = 'Please answer this question before continuing.'; return false; }
-function finishProfile() { profileState.updatedAt = new Date().toISOString(); profileState.scan.previewAvailable = false; localStorage.setItem('dermiProfile', JSON.stringify(profileState)); window.location.href = './profile.html'; }
+function profileDestination() { return new URLSearchParams(location.search).get('next') === 'persona' ? './persona.html' : './profile.html'; }
+function finishProfile() { profileState.updatedAt = new Date().toISOString(); profileState.scan.previewAvailable = false; localStorage.setItem('dermiProfile', JSON.stringify(profileState)); window.location.href = profileDestination(); }
 
 cameraButton.addEventListener('click', () => { if (scanState === 'idle') startCamera(); else if (scanState === 'camera') captureCamera(); else if (scanState === 'photoReady') analyzePhoto(); });
 photoUpload.addEventListener('change', (event) => { const file = event.target.files?.[0]; if (!file || ['analyzing', 'complete'].includes(scanState)) return; if (uploadedImageUrl) URL.revokeObjectURL(uploadedImageUrl); uploadedImageUrl = URL.createObjectURL(file); markScanReady('upload', uploadedImageUrl); });
@@ -141,7 +149,7 @@ document.addEventListener('click', bindQuestionInput);
 document.addEventListener('change', (event) => { const question = questions[questionIndex]; if (event.target.matches('[data-question-input]') && question) setAnswer(question, event.target.value); });
 continueButton.addEventListener('click', () => { if (currentStep === 1) return; if (!validateQuestion()) return; questionIndex += 1; renderQuestion(); });
 backButton.addEventListener('click', () => { if (currentStep === 1) return; if (questionIndex > 0) { questionIndex -= 1; renderQuestion(); } else { showPanel(1); updateScanUi(scanState); } });
-saveExitButton.addEventListener('click', () => { profileState.updatedAt = new Date().toISOString(); localStorage.setItem('dermiProfile', JSON.stringify(profileState)); window.location.href = './profile.html'; });
+saveExitButton.addEventListener('click', () => { profileState.updatedAt = new Date().toISOString(); localStorage.setItem('dermiProfile', JSON.stringify(profileState)); window.location.href = profileDestination(); });
 
 function enterBuilder(message) { signupGateOpen = false; signupMockup.hidden = true; document.body.classList.remove('signup-gate-open'); setMessage(message); cameraButton.focus(); }
 document.body.classList.add('signup-gate-open'); document.querySelector('#signup-google').focus();
