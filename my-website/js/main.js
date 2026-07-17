@@ -30,6 +30,15 @@ if (header) {
   header.querySelector(`[data-nav="${navActive}"]`)?.classList.add('active');
 }
 
+if (pageName === 'index.html') {
+  const heroVisual = document.querySelector('.hero-visual');
+  if (heroVisual) {
+    heroVisual.querySelector('.sun-disc')?.remove();
+    heroVisual.querySelector('.face-blob')?.remove();
+    heroVisual.insertAdjacentHTML('afterbegin', '<div class="hero-artwork-layer"><img class="hero-artwork" src="./assets/images/dermi-hero.png" alt="Illustration of a person with blue hair" /></div>');
+  }
+}
+
 document.querySelectorAll('a[href="./persona.html"]').forEach((link) => link.addEventListener('click', (event) => {
   if (localStorage.getItem('dermiProfile')) return;
   event.preventDefault();

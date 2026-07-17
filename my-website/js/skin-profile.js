@@ -24,6 +24,8 @@ scanLoading.hidden = true;
 scanLoading.style.display = 'none';
 scanComplete.hidden = true;
 scanComplete.style.display = 'none';
+scanPlaceholder.remove();
+scanPreview.remove();
 
 const skipScanButton = document.createElement('button');
 skipScanButton.id = 'skip-face-scan';
@@ -77,7 +79,7 @@ function showPanel(step) { currentStep = step; panels.forEach((panel) => { const
 function updateScanUi(state) {
   scanState = state; scanStage.dataset.scanState = state;
   const busy = state === 'analyzing' || state === 'complete';
-  scanGuide.hidden = state !== 'camera';
+  scanGuide.hidden = true;
   scanLoading.hidden = state !== 'analyzing'; scanLoading.style.display = state === 'analyzing' ? 'grid' : 'none';
   scanComplete.hidden = state !== 'complete'; scanComplete.style.display = state === 'complete' ? 'grid' : 'none';
   cameraButton.disabled = busy; photoUpload.disabled = busy; uploadButton.classList.toggle('is-disabled', busy); uploadButton.setAttribute('aria-disabled', String(busy));
@@ -119,7 +121,7 @@ function applyScanResults() {
   if (!profileState.skinType) profileState.skinType = 'Combination'; if (!profileState.concerns.length) profileState.concerns = ['Dryness and dehydration'];
 }
 function markScanReady(source, imageUrl) { clearTimeout(analysisTimer); clearTimeout(completionTimer); profileState.scan.source = source; profileState.scan.imageAnalyzed = false; scanPreview.src = imageUrl; scanPreview.hidden = false; cameraVideo.hidden = true; scanPlaceholder.hidden = true; stopCamera(); updateScanUi('photoReady'); setMessage('Photo ready. Click Analyze this photo when you are happy with the framing.'); }
-async function startCamera() { try { cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false }); cameraVideo.srcObject = cameraStream; cameraVideo.hidden = false; scanPreview.hidden = true; scanPlaceholder.hidden = true; updateScanUi('camera'); await cameraVideo.play(); setMessage('Camera ready. Center your face inside the frame.'); } catch { stopCamera(); updateScanUi('idle'); setMessage('Camera access was unavailable. You can upload a photo instead.', true); } }
+async function startCamera() { try { cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false }); cameraVideo.srcObject = cameraStream; cameraVideo.hidden = false; scanPreview.hidden = true; scanPlaceholder.hidden = true; updateScanUi('camera'); await cameraVideo.play(); setMessage('Camera ready. Capture when you are ready.'); } catch { stopCamera(); updateScanUi('idle'); setMessage('Camera access was unavailable. You can upload a photo instead.', true); } }
 function captureCamera() { if (!cameraStream || cameraVideo.hidden) return startCamera(); const canvas = document.querySelector('#scan-canvas'); canvas.width = cameraVideo.videoWidth || 720; canvas.height = cameraVideo.videoHeight || 960; canvas.getContext('2d').drawImage(cameraVideo, 0, 0, canvas.width, canvas.height); markScanReady('camera', canvas.toDataURL('image/jpeg', .85)); }
 function analyzePhoto() { if (scanState !== 'photoReady') return; updateScanUi('analyzing'); setMessage('Reading your skin signals...'); analysisTimer = setTimeout(() => { profileState.scan.imageAnalyzed = true; applyScanResults(); updateScanUi('complete'); setMessage('Scan complete. Opening questions...'); completionTimer = setTimeout(() => { questionIndex = 0; renderQuestion(); }, 850); }, 1200); }
 function resetScan() { clearTimeout(analysisTimer); clearTimeout(completionTimer); stopCamera(); if (uploadedImageUrl) URL.revokeObjectURL(uploadedImageUrl); uploadedImageUrl = ''; photoUpload.value = ''; profileState.scan = { source: '', imageAnalyzed: false, imageDeleted: true, detectedSkinType: '', detectedConcerns: [], previewAvailable: false }; scanPreview.removeAttribute('src'); scanPreview.hidden = true; cameraVideo.hidden = true; scanPlaceholder.hidden = false; updateScanUi('idle'); setMessage(''); }

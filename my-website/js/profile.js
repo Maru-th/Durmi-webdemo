@@ -61,3 +61,5 @@ function bindCustomAnswerInputs() {
 }
 
 fetch('./assets/skin-profile-questions.json').then((response) => response.ok ? response.json() : Promise.reject()).then((data) => { configurableQuestions = Array.isArray(data.questions) ? data.questions.filter((question) => ['single', 'multiple', 'select', 'text'].includes(question.type)) : []; render(); }).catch(() => {});
+
+document.querySelector('#profile-readiness').insertAdjacentHTML('afterend', `<section class="profile-persona-cta"><div><span>PERSONA AI RECOMMENDATION</span><h2>Build a routine made for your skin</h2><p>Choose your routine level and budget to receive a mock set of compatible products.</p></div><a class="button" href="./persona.html">Explore Persona <b>→</b></a></section>`);
